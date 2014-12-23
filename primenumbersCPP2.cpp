@@ -10,7 +10,7 @@
 #include <cmath>
 #include <vector>
 #include <ctime>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
@@ -18,11 +18,11 @@ int main(int argc, const char * argv[]) {
     clock_t begin = clock();
     
     auto b = 0;
-    auto tmp = 0;
+    auto latest_square_prime = 0;
     auto is_prime = true;
     
     vector<long int> primes;
-    map<int, int> square_primes;
+    unordered_map<int, int> square_primes;
     
     unsigned long int psize = 0;
     
@@ -52,17 +52,17 @@ int main(int argc, const char * argv[]) {
             
             if (is_prime) {
                 primes.push_back(a);
-                tmp = static_cast<int>(sqrt(a));
-                if (tmp > 1) {
-                    int s_tmp = static_cast<int>(sqrt(tmp));
+                if (b > 1) {
+                    int s_tmp = static_cast<int>(sqrt(b));
                     auto is_map_prime = true;
                     for (auto js = 2; js <= s_tmp; js++) {
-                        if (tmp % js == 0) {
+                        if (b % js == 0) {
                             is_map_prime = false;
                         }
                     }
                     if (is_map_prime) {
-                        square_primes[tmp] = tmp;
+                        square_primes[b] = b;
+                        latest_square_prime = b;
                     }
                 }
             }
@@ -88,6 +88,7 @@ int main(int argc, const char * argv[]) {
     cout << "Elements: " << primes.size() << endl;
     cout << "Pr. sec: " << elements_pr_sec << endl;
     cout << "Squareprimes: " << square_primes.size() << endl;
+    cout << "Latest squareprime: " << latest_square_prime << endl;
 
     return 0;
 }
